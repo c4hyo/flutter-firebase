@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "712156339552",
+    "firebase_url": "https://cwh-firebase.firebaseio.com",
+    "project_id": "cwh-firebase",
+    "storage_bucket": "cwh-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:712156339552:android:9200c0b7c9bb26e5d7d205",
+        "android_client_info": {
+          "package_name": "com.example.charity_with_happiness_firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "712156339552-hv0lh1mmd5088fa7osnbpfdae8qbuhno.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHkExt58-axwR0SRymh3z4R66ikRkaYMM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "712156339552-hv0lh1mmd5088fa7osnbpfdae8qbuhno.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
