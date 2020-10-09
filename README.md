@@ -1,5 +1,3 @@
-# charity_with_happiness_firebase
-
 A new Flutter project.
 
 ## Getting Started
