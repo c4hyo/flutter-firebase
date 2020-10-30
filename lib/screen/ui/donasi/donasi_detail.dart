@@ -31,6 +31,8 @@ class _DonasiDetailScreenState extends State<DonasiDetailScreen> {
   String _nominalDonasi;
   ImagePicker _picker = ImagePicker();
   File _buktiDonasi;
+  int total = 0;
+
   GlobalKey<FormState> _donasiKey = GlobalKey<FormState>();
   _delete({String url}) {
     return showDialog(
@@ -154,6 +156,12 @@ class _DonasiDetailScreenState extends State<DonasiDetailScreen> {
         );
       },
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    print("$total");
   }
 
   @override
@@ -281,6 +289,25 @@ class _DonasiDetailScreenState extends State<DonasiDetailScreen> {
                           title: Text("Keterangan: "),
                           subtitle: Text(model.deskripsi),
                         ),
+                        ListTile(
+                          title: Text("Total Donasi Sekarang: "),
+                          subtitle: StreamBuilder<QuerySnapshot>(
+                            stream: DonasiDatabase.donasi
+                                .doc(widget.idDonasi)
+                                .collection("donatur")
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                return Text("0");
+                              }
+                              snapshot.data.docs.forEach((element) {
+                                total += element.data()['nominal_donasi'];
+                                print("$total");
+                              });
+                              return Text("$total");
+                            },
+                          ),
+                        ),
                         ExpansionTile(
                           title: Text("Daftar Donatur"),
                           children: [
@@ -299,6 +326,7 @@ class _DonasiDetailScreenState extends State<DonasiDetailScreen> {
                                       child: CircularProgressIndicator(),
                                     );
                                   }
+
                                   return ListView.builder(
                                     itemCount: snapshot.data.docs.length,
                                     itemBuilder: (context, index) {

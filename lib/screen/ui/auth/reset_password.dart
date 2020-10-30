@@ -1,20 +1,18 @@
 import 'package:charity_with_happiness_firebase/firebase/auth/auth.dart';
-import 'package:charity_with_happiness_firebase/screen/ui/auth/regis.dart';
-import 'package:charity_with_happiness_firebase/screen/ui/auth/reset_password.dart';
+import 'package:charity_with_happiness_firebase/screen/widget/logo.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
-import 'package:charity_with_happiness_firebase/screen/widget/logo.dart';
 
-class LoginScreen extends StatefulWidget {
+class ResetPassword extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _ResetPasswordState createState() => _ResetPasswordState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _ResetPasswordState extends State<ResetPassword> {
   bool _isLoading = false;
-  String _email, _password;
+  String _email;
   GlobalKey<FormState> _form = new GlobalKey<FormState>();
 
   @override
@@ -78,48 +76,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, bottom: 10),
-                    child: TextFormField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        labelText: "Password",
-                        prefixIcon: Icon(Ionicons.ios_lock),
-                        border: OutlineInputBorder(),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Theme.of(context).primaryColor),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.red),
-                        ),
-                      ),
-                      onSaved: (newValue) {
-                        _password = newValue;
-                      },
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return "Password tidak boleh kosong";
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: GestureDetector(
-                      onTap: () => Get.to(
-                        ResetPassword(),
-                      ),
-                      child: Text(
-                        "Reset Password",
-                        style: TextStyle(color: Theme.of(context).primaryColor),
-                      ),
-                    ),
-                  ),
                   SizedBox(
                     height: 20,
                   ),
@@ -142,50 +98,25 @@ class _LoginScreenState extends State<LoginScreen> {
                                 _isLoading = true;
                               });
                               try {
-                                await AuthServices.signIn(
-                                  email: _email,
-                                  password: _password,
-                                );
+                                await AuthServices.auth
+                                    .sendPasswordResetEmail(email: _email);
+                                Get.back();
                               } catch (e) {
                                 setState(() {
                                   _isLoading = false;
                                 });
-                                Get.snackbar(
-                                    "error", "Email atau Password salah");
+                                Get.snackbar("error", "Cek email anda");
                               }
                             }
                           },
                           child: Text(
-                            "Login",
+                            "Reset Password",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
                             ),
                           ),
                         ),
-                  Divider(
-                    height: 30,
-                    color: Colors.transparent,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text("Belum mempunyai akun? "),
-                      GestureDetector(
-                        onTap: () {
-                          Get.to(
-                            RegistrasiScreen(),
-                            transition: Transition.noTransition,
-                          );
-                        },
-                        child: Text(
-                          "Daftar Sekarang",
-                          style:
-                              TextStyle(color: Theme.of(context).primaryColor),
-                        ),
-                      )
-                    ],
-                  ),
                 ],
               ),
             ),
